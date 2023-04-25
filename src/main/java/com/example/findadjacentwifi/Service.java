@@ -19,8 +19,6 @@ public class Service {
         Service service = new Service();
         String json = service.getUserInfo("434665544267756b34325141564f69");
         service.parseJSON(json);
-
-
     }
 
     public String getUserInfo(String key) {
