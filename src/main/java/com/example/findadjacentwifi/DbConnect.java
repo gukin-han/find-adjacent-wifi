@@ -1,8 +1,6 @@
 package com.example.findadjacentwifi;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DbConnect {
     private static Connection conn;
@@ -27,6 +25,26 @@ public class DbConnect {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static void insert () {
+            String sql = "INSERT INTO wifi(name) VALUES(?)";
+        PreparedStatement pstmt;
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, "gukin");
+            pstmt.executeUpdate();
+            System.out.println("works!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void main(String[] args) {
+        getConnection();
+        insert();
+        closeConnection();
     }
 
 }
