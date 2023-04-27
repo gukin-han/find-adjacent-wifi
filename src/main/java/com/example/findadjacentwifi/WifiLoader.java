@@ -9,16 +9,17 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class WifiLoader {
-    private String json;
-    private List<Wifi> wifiList;
+    public String json;
+    public List<Wifi> wifiList = new ArrayList<>();
 
     private final String APIKEY = "434665544267756b34325141564f69";
 
-    public boolean getWifiAsJSON(int start, int end) {
+    public boolean requestWifiAsJSON(int start, int end) {
         final String TYPE = "json";
 
         try {
@@ -57,8 +58,7 @@ public class WifiLoader {
         return false;
     }
 
-    public void parseJSON() {
-
+    public void parseJSONAndAddToList() {
         JsonParser parser = new JsonParser();
         JsonElement element = parser.parse(this.json);
         JsonElement tbPublicWifiInfo = element.getAsJsonObject().get("TbPublicWifiInfo");
@@ -66,6 +66,33 @@ public class WifiLoader {
 
         Gson gson = new Gson();
         Wifi[] array = gson.fromJson(rows, Wifi[].class);
-        this.wifiList = Arrays.asList(array);
+        this.wifiList.addAll(Arrays.asList(array));
+    }
+
+    public int getWifiListTotalCount() {
+        requestWifiAsJSON(1, 1);
+        JsonParser parser = new JsonParser();
+        JsonElement element = parser.parse(this.json);
+        JsonElement tbPublicWifiInfo = element.getAsJsonObject().get("TbPublicWifiInfo");
+        return Integer.parseInt(tbPublicWifiInfo.getAsJsonObject().get("list_total_count").toString());
+    }
+
+    public void loadAllWifi() {
+        int wifiListTotalCount = getWifiListTotalCount();
+
+        int startIdx = 1;
+        int endIdx = 1000;
+
+        for (int i = 0; i < wifiListTotalCount/1000; i++) {
+            requestWifiAsJSON(startIdx, endIdx);
+            parseJSONAndAddToList();
+            startIdx += 1000;
+            endIdx += 1000;
+        }
+
+        int remainder = wifiListTotalCount % 1000 - 1;
+        endIdx = startIdx + remainder;
+        requestWifiAsJSON(startIdx, endIdx);
+        parseJSONAndAddToList();
     }
 }
