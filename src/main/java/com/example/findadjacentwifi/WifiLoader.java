@@ -12,7 +12,7 @@ import com.google.gson.JsonParser;
 import java.util.Arrays;
 import java.util.List;
 
-public class WifiLoadService {
+public class WifiLoader {
     private String json;
     private List<Wifi> wifiList;
 
