@@ -29,7 +29,7 @@ public class DBHandler {
     }
 
     public static void insert () {
-        String sql = "INSERT INTO wifi(name) VALUES(?)";
+        String sql = "INSERT INTO wifi_unit(distance) VALUES(?)";
         PreparedStatement pstmt;
         try {
             pstmt = conn.prepareStatement(sql);
@@ -42,9 +42,7 @@ public class DBHandler {
     }
 
     public static void insertWifi (Wifi wifi) {
-        String sql = "INSERT INTO " +
-                "wifi_unit " +
-                "(" +
+        String sql = "INSERT INTO wifi_unit (" +
                 "distance," +
                 "mgr_no," +
                 "wrdofc," +
@@ -66,31 +64,29 @@ public class DBHandler {
         PreparedStatement pstmt;
         try {
             pstmt = conn.prepareStatement(sql);
-            pstmt.setObject(1, null);
-            pstmt.setObject(2, wifi.getX_SWIFI_MGR_NO());
-            pstmt.setObject(3, wifi.getX_SWIFI_WRDOFC());
-            pstmt.setObject(4, wifi.getX_SWIFI_MAIN_NM());
-            pstmt.setObject(5, wifi.getX_SWIFI_ADRES1());
-            pstmt.setObject(6, wifi.getX_SWIFI_ADRES2());
-            pstmt.setObject(7, wifi.getX_SWIFI_INSTL_FLOOR());
-            pstmt.setObject(8, wifi.getX_SWIFI_INSTL_MBY());
-            pstmt.setObject(9, wifi.getX_SWIFI_INSTL_TY());
-            pstmt.setObject(10, wifi.getX_SWIFI_SVC_SE());
-            pstmt.setObject(11, wifi.getX_SWIFI_CMCWR());
-            pstmt.setObject(12, wifi.getX_SWIFI_CNSTC_YEAR());
-            pstmt.setObject(13, wifi.getX_SWIFI_INOUT_DOOR());
-            pstmt.setObject(14, wifi.getX_SWIFI_REMARS3());
-            pstmt.setObject(15, wifi.getLAT());
-            pstmt.setObject(16, wifi.getLNT());
-            pstmt.setObject(17, wifi.getWORK_DTTM());
+            pstmt.setString(1, null);
+            pstmt.setString(2, wifi.getX_SWIFI_MGR_NO());
+            pstmt.setString(3, wifi.getX_SWIFI_WRDOFC());
+            pstmt.setString(4, wifi.getX_SWIFI_MAIN_NM());
+            pstmt.setString(5, wifi.getX_SWIFI_ADRES1());
+            pstmt.setString(6, wifi.getX_SWIFI_ADRES2());
+            pstmt.setString(7, wifi.getX_SWIFI_INSTL_FLOOR());
+            pstmt.setString(8, wifi.getX_SWIFI_INSTL_MBY());
+            pstmt.setString(9, wifi.getX_SWIFI_INSTL_TY());
+            pstmt.setString(10, wifi.getX_SWIFI_SVC_SE());
+            pstmt.setString(11, wifi.getX_SWIFI_CMCWR());
+            pstmt.setString(12, wifi.getX_SWIFI_CNSTC_YEAR());
+            pstmt.setString(13, wifi.getX_SWIFI_INOUT_DOOR());
+            pstmt.setString(14, wifi.getX_SWIFI_REMARS3());
+            pstmt.setString(15, wifi.getLAT());
+            pstmt.setString(16, wifi.getLNT());
+            pstmt.setString(17, wifi.getWORK_DTTM());
 
             pstmt.executeUpdate();
-            System.out.println("works!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
 
     public static void creatTable() {
         String sql = "create table if not exists wifi_unit" +
@@ -111,14 +107,14 @@ public class DBHandler {
                 "remars3 text," +
                 "lat text," +
                 "lnt text," +
-                "work_dttm text" +
-                ")";
+                "work_dttm text," +
+                "primary key (mgr_no) )";
 
         Statement stmt = null;
         try {
             stmt = conn.createStatement();
             stmt.execute(sql);
-            System.out.println("works!");
+            System.out.println("The table is created!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -131,7 +127,7 @@ public class DBHandler {
         try {
             stmt = conn.createStatement();
             stmt.execute(sql);
-            System.out.println("works!");
+            System.out.println("The table is removed!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -140,6 +136,7 @@ public class DBHandler {
     public static void main(String[] args) {
         createConnection();
         dropTable();
+        creatTable();
         closeConnection();
     }
 }
