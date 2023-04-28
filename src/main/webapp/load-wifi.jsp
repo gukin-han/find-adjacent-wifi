@@ -3,9 +3,13 @@
 <html>
 <head>
   <title>와이파이 정보 구하기</title>
+
+
 </head>
 <body>
-<h1>와이파이 정보 구하기</h1>
+<h1> ${wifiListSize}개의 WIFI 정보를 정상적으로 저장하였습니다.</h1>
+<a href="index.jsp"> 홈으로 가기 </a>
+
 <br/>
 
 </body>
