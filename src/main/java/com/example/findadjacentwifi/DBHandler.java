@@ -1,16 +1,15 @@
 package com.example.findadjacentwifi;
 
 import java.sql.*;
-import java.util.List;
 
 public class DBHandler {
-    private static Connection conn;
+    private Connection conn;
 
-    public static Connection createConnection() {
+    public Connection createConnection() {
         if (conn == null) {
             try {
                 Class.forName("org.sqlite.JDBC");
-                conn = DriverManager.getConnection("jdbc:sqlite:" + "SQLiteDB.db");
+                conn = DriverManager.getConnection("jdbc:sqlite:SQLiteDB.db");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -18,7 +17,7 @@ public class DBHandler {
         return conn;
     }
 
-    public static void closeConnection() {
+    public void closeConnection() {
         if (conn != null) {
             try {
                 conn.close();
@@ -28,7 +27,7 @@ public class DBHandler {
         }
     }
 
-    public static void insert () {
+    public void insert () {
         String sql = "INSERT INTO wifi_unit(distance) VALUES(?)";
         PreparedStatement pstmt;
         try {
@@ -41,30 +40,15 @@ public class DBHandler {
         }
     }
 
-    public static void insertWifi (Wifi wifi) {
+    public void insertWifi (Wifi wifi) {
         String sql = "INSERT INTO wifi_unit (" +
-                "distance," +
-                "mgr_no," +
-                "wrdofc," +
-                "main_nm," +
-                "adres1," +
-                "arres2," +
-                "instl_floor," +
-                "instl_mby," +
-                "instal_ty," +
-                "svc_se," +
-                "cmcwr," +
-                "cnstc_year," +
-                "inout_door," +
-                "remars3," +
-                "lat," +
-                "lnt," +
-                "work_dttm" +
+                "distance, mgr_no, wrdofc, main_nm, adres1, arres2, instl_floor, instl_mby, instal_ty, svc_se," +
+                "cmcwr, cnstc_year,binout_door, remars3, lat, lnt, work_dttm" +
                 ") VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement pstmt;
         try {
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, null);
+            pstmt.setDouble(1, 0.0);
             pstmt.setString(2, wifi.getX_SWIFI_MGR_NO());
             pstmt.setString(3, wifi.getX_SWIFI_WRDOFC());
             pstmt.setString(4, wifi.getX_SWIFI_MAIN_NM());
@@ -88,27 +72,11 @@ public class DBHandler {
         }
     }
 
-    public static void creatTable() {
+    public void createTable() {
         String sql = "create table if not exists wifi_unit" +
-                "(" +
-                "distance nummeric," +
-                "mgr_no text," +
-                "wrdofc text," +
-                "main_nm text," +
-                "adres1 text," +
-                "arres2 text," +
-                "instl_floor text," +
-                "instl_mby text," +
-                "instal_ty text," +
-                "svc_se text," +
-                "cmcwr text," +
-                "cnstc_year text," +
-                "inout_door text," +
-                "remars3 text," +
-                "lat text," +
-                "lnt text," +
-                "work_dttm text," +
-                "primary key (mgr_no) )";
+                "(distance real, mgr_no text, wrdofc text, main_nm text, adres1 text, arres2 text, instl_floor text," +
+                "instl_mby text, instal_ty text, svc_se text, cmcwr text, cnstc_year text, inout_door text," +
+                "remars3 text, lat text, lnt text, work_dttm text, primary key (mgr_no) )";
 
         Statement stmt = null;
         try {
@@ -120,7 +88,7 @@ public class DBHandler {
         }
     }
 
-    public static void dropTable() {
+    public void dropTable() {
         String sql = "drop table if exists wifi_unit";
 
         Statement stmt = null;
@@ -133,10 +101,4 @@ public class DBHandler {
         }
     }
 
-    public static void main(String[] args) {
-        createConnection();
-        dropTable();
-        creatTable();
-        closeConnection();
-    }
 }
