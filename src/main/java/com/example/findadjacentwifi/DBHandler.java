@@ -5,7 +5,7 @@ import java.sql.*;
 public class DBHandler {
     private Connection conn;
 
-    public Connection createConnection() {
+    public void createConnection() {
         if (conn == null) {
             try {
                 Class.forName("org.sqlite.JDBC");
@@ -14,7 +14,6 @@ public class DBHandler {
                 e.printStackTrace();
             }
         }
-        return conn;
     }
 
     public void closeConnection() {
@@ -27,14 +26,30 @@ public class DBHandler {
         }
     }
 
-    public void insert () {
-        String sql = "INSERT INTO wifi_unit(distance) VALUES(?)";
-        PreparedStatement pstmt;
+    public void createTable() {
+        String sql = "create table if not exists wifi_unit" +
+                "(distance real, mgr_no text, wrdofc text, main_nm text, adres1 text, arres2 text, instl_floor text," +
+                "instl_mby text, instal_ty text, svc_se text, cmcwr text, cnstc_year text, inout_door text," +
+                "remars3 text, lat text, lnt text, work_dttm text, primary key (mgr_no) )";
+
+        Statement stmt = null;
         try {
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, "gukin");
-            pstmt.executeUpdate();
-            System.out.println("works!");
+            stmt = conn.createStatement();
+            stmt.execute(sql);
+            System.out.println("The table is created!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void dropTable() {
+        String sql = "drop table if exists wifi_unit";
+
+        Statement stmt = null;
+        try {
+            stmt = conn.createStatement();
+            stmt.execute(sql);
+            System.out.println("The table is removed!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -67,35 +82,6 @@ public class DBHandler {
             pstmt.setString(17, wifi.getWORK_DTTM());
 
             pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void createTable() {
-        String sql = "create table if not exists wifi_unit" +
-                "(distance real, mgr_no text, wrdofc text, main_nm text, adres1 text, arres2 text, instl_floor text," +
-                "instl_mby text, instal_ty text, svc_se text, cmcwr text, cnstc_year text, inout_door text," +
-                "remars3 text, lat text, lnt text, work_dttm text, primary key (mgr_no) )";
-
-        Statement stmt = null;
-        try {
-            stmt = conn.createStatement();
-            stmt.execute(sql);
-            System.out.println("The table is created!");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void dropTable() {
-        String sql = "drop table if exists wifi_unit";
-
-        Statement stmt = null;
-        try {
-            stmt = conn.createStatement();
-            stmt.execute(sql);
-            System.out.println("The table is removed!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
