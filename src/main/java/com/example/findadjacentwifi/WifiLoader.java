@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class WifiLoader {
-    public String json;
+    public String wifiJson;
     public List<Wifi> wifiList = new ArrayList<>();
 
     private final String APIKEY = "434665544267756b34325141564f69";
@@ -45,7 +45,7 @@ public class WifiLoader {
                 // 응답 받아서 처리
                 ResponseBody body = response.body();
                 if (body != null) {
-                    this.json = body.string();
+                    this.wifiJson = body.string();
                 }
             } else
                 System.err.println("Error Occurred");
@@ -60,7 +60,7 @@ public class WifiLoader {
 
     public void parseJSONAndAddToList() {
         JsonParser parser = new JsonParser();
-        JsonElement element = parser.parse(this.json);
+        JsonElement element = parser.parse(this.wifiJson);
         JsonElement tbPublicWifiInfo = element.getAsJsonObject().get("TbPublicWifiInfo");
         JsonElement rows = tbPublicWifiInfo.getAsJsonObject().get("row");
 
@@ -72,12 +72,12 @@ public class WifiLoader {
     public int getWifiListTotalCount() {
         requestWifiAsJSON(1, 1);
         JsonParser parser = new JsonParser();
-        JsonElement element = parser.parse(this.json);
+        JsonElement element = parser.parse(this.wifiJson);
         JsonElement tbPublicWifiInfo = element.getAsJsonObject().get("TbPublicWifiInfo");
         return Integer.parseInt(tbPublicWifiInfo.getAsJsonObject().get("list_total_count").toString());
     }
 
-    public void loadAllWifi() {
+    public void addAllWifi() {
         int wifiListTotalCount = getWifiListTotalCount();
 
         int startIdx = 1;
