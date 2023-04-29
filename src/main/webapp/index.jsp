@@ -1,3 +1,5 @@
+<%@ page import="com.example.findadjacentwifi.Wifi" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -26,12 +28,13 @@
     <a href="bookmark-view.jsp">북마크 보기</a><a> | </a>
     <a href="bookmark-group-manage.jsp">북마크 그룹 관리</a>
 
-    <form method="post">
+    <form method="post" action="/DistanceCalculatorServlet">
       LAT: <input type="text" name="lat" id="lat">
       LNT: <input type="text" name="lnt" id="lnt">
       <input type="button" value="내 위치 가져오기" onclick="fillInputFields()">
       <input type="submit" value="근처 wifi 정보 보기" name="submitBtn">
     </form>
+
 
     <table>
       <th>거리(Km)</th>
@@ -51,8 +54,47 @@
       <th>LAT</th>
       <th>LNT</th>
       <th>작업일자</th>
-    </table>
+    <%
+      String latParam = request.getParameter("lat");
+      String lntParam = request.getParameter("lnt");
+      List<Wifi> nearestWifiList = (List<Wifi>) request.getAttribute("nearestWifi");
 
+      if (latParam == null || lntParam == null || nearestWifiList == null) {
+          out.println("<tr>");
+          out.println("<td colspan = 17>");
+          out.println("<p>You need to enter latitude and longitude values.</p>");
+          out.println("</td>");
+          out.println("<tr>");
+      } else {
+        StringBuilder sb = new StringBuilder();
+          for (int i = nearestWifiList.size() - 1 ; i >= 0; i--) {
+            Wifi wifi = nearestWifiList.get(i);
+              sb.append("<tr>")
+              .append("<td>" + String.format("%.5f",wifi.getDistance()) + "</td>")
+              .append("<td>" + wifi.getX_SWIFI_MGR_NO() + "</td>")
+              .append("<td>" + wifi.getX_SWIFI_WRDOFC() + "</td>")
+              .append("<td>" + wifi.getX_SWIFI_MAIN_NM() + "</td>")
+              .append("<td>" + wifi.getX_SWIFI_ADRES1() + "</td>")
+              .append("<td>" + wifi.getX_SWIFI_ADRES2() + "</td>")
+              .append("<td>" + wifi.getX_SWIFI_INSTL_FLOOR() + "</td>")
+              .append("<td>" + wifi.getX_SWIFI_INSTL_TY() + "</td>")
+              .append("<td>" + wifi.getX_SWIFI_INSTL_MBY() + "</td>")
+              .append("<td>" + wifi.getX_SWIFI_SVC_SE() + "</td>")
+              .append("<td>" + wifi.getX_SWIFI_CMCWR() + "</td>")
+              .append("<td>" + wifi.getX_SWIFI_CNSTC_YEAR() + "</td>")
+              .append("<td>" + wifi.getX_SWIFI_INOUT_DOOR() + "</td>")
+              .append("<td>" + wifi.getX_SWIFI_REMARS3() + "</td>")
+              .append("<td>" + wifi.getLAT() + "</td>")
+              .append("<td>" + wifi.getLNT() + "</td>")
+              .append("<td>" + wifi.getWORK_DTTM() + "</td>")
+              .append("</tr>");
+          }
+          sb.append("</table>");
+          out.println(sb.toString());
+      }
+    %>
+    </table>
+<%--    더미 경도와 위도를 로드   --%>
     <script>
       function fillInputFields() {
         const lat = document.getElementById("lat");
@@ -61,15 +103,6 @@
         lnt.value = "127.0413466";
       }
     </script>
-
-    <%
-      if(request.getParameter("submitBtn") != null) {
-        String lat = request.getParameter("lat");
-        String lnt = request.getParameter("lnt");
-        // Java code to be executed when button is clicked
-        out.println("You entered: " + lat + lnt);
-      }
-    %>
 
   </body>
 </html>

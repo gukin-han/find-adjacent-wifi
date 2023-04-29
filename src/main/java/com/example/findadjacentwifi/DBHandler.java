@@ -1,6 +1,8 @@
 package com.example.findadjacentwifi;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBHandler {
     private Connection conn;
@@ -28,8 +30,8 @@ public class DBHandler {
 
     public void createTable() {
         String sql = "create table if not exists wifi_unit" +
-                "(distance real, mgr_no text, wrdofc text, main_nm text, adres1 text, arres2 text, instl_floor text," +
-                "instl_mby text, instal_ty text, svc_se text, cmcwr text, cnstc_year text, inout_door text," +
+                "(distance real, mgr_no text, wrdofc text, main_nm text, adres1 text, adres2 text, instl_floor text," +
+                "instl_mby text, instl_ty text, svc_se text, cmcwr text, cnstc_year text, inout_door text," +
                 "remars3 text, lat text, lnt text, work_dttm text, primary key (mgr_no) )";
 
         Statement stmt = null;
@@ -57,8 +59,8 @@ public class DBHandler {
 
     public void insertWifi (Wifi wifi) {
         String sql = "INSERT INTO wifi_unit (" +
-                "distance, mgr_no, wrdofc, main_nm, adres1, arres2, instl_floor, instl_mby, instal_ty, svc_se," +
-                "cmcwr, cnstc_year,binout_door, remars3, lat, lnt, work_dttm" +
+                "distance, mgr_no, wrdofc, main_nm, adres1, adres2, instl_floor, instl_mby, instl_ty, svc_se," +
+                "cmcwr, cnstc_year,inout_door, remars3, lat, lnt, work_dttm" +
                 ") VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement pstmt;
         try {
@@ -86,5 +88,54 @@ public class DBHandler {
             e.printStackTrace();
         }
     }
+
+    public ResultSet selectAllWifi() {
+
+        Statement stmt;
+        ResultSet resultSet = null;
+        try {
+
+            stmt = conn.createStatement();
+            resultSet = stmt.executeQuery("SELECT * FROM wifi_unit");
+            System.out.println("Get all wifi");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return resultSet;
+    }
+
+    public void updateDistance(double distance, String mgr_no) {
+        String sql = "update wifi_unit set distance = ? where mgr_no = ?";
+        PreparedStatement pstmt;
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setDouble(1, distance);
+            pstmt.setString(2, mgr_no);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ResultSet selectNearestWifi(double lat, double lnt) {
+
+        Statement stmt;
+        ResultSet resultSet = null;
+        try {
+            stmt = conn.createStatement();
+            resultSet = stmt.executeQuery("SELECT * FROM wifi_unit\n" +
+                    " ORDER BY ABS(lat - 37.5670135) * ABS(lat - 37.5670135)\n" +
+                    "        + ABS(lnt - 126.9783740) * ABS(lnt - 126.9783740)\n" +
+                    "\t\tlimit 20\n");
+            return resultSet;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return resultSet;
+    }
+
 
 }

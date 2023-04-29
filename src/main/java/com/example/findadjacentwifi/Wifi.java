@@ -1,7 +1,7 @@
 package com.example.findadjacentwifi;
 
 public class Wifi {
-    private Integer distance;
+    private double distance;
     private String X_SWIFI_MGR_NO;
     private String X_SWIFI_WRDOFC;
     private String X_SWIFI_MAIN_NM;
@@ -21,11 +21,11 @@ public class Wifi {
 
     public Wifi(){}
 
-    public Integer getDistance() {
+    public double getDistance() {
         return distance;
     }
 
-    public void setDistance(Integer distance) {
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 

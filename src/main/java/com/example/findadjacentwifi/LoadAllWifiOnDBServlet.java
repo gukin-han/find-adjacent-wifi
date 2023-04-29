@@ -16,18 +16,19 @@ public class LoadAllWifiOnDBServlet extends HttpServlet {
         // Execute the necessary Java code here
 
         WifiLoader service = new WifiLoader();
+        DBHandler dbHandler = new DBHandler();
 
         service.addAllWifi();
         String wifiListSize = String.valueOf(service.wifiList.size());
 
-        createConnection();
+        dbHandler.createConnection();
         // table initialize
-        dropTable();
-        creatTable();
+        dbHandler.dropTable();
+        dbHandler.createTable();
         for (Wifi wifi : service.wifiList) {
-            insertWifi(wifi);
+            dbHandler.insertWifi(wifi);
         }
-        closeConnection();
+        dbHandler.closeConnection();
 
         // Set wifiListSize as an attribute in the request object
         request.setAttribute("wifiListSize", wifiListSize);
