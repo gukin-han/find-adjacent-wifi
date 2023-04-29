@@ -46,8 +46,12 @@ public class DistanceCalculatorServlet extends HttpServlet {
                 wifi.setX_SWIFI_ADRES1(resultSet.getString("adres1"));
                 wifi.setX_SWIFI_ADRES2(resultSet.getString("adres2"));
                 wifi.setX_SWIFI_INSTL_FLOOR(resultSet.getString("instl_floor"));
-                wifi.setX_SWIFI_INSTL_MBY(resultSet.getString("instl_mby"));
                 wifi.setX_SWIFI_INSTL_TY(resultSet.getString("instl_ty"));
+                wifi.setX_SWIFI_INSTL_MBY(resultSet.getString("instl_mby"));
+                wifi.setX_SWIFI_CMCWR(resultSet.getString("cmcwr"));
+                wifi.setX_SWIFI_SVC_SE(resultSet.getString("svc_se"));
+                wifi.setX_SWIFI_CNSTC_YEAR(resultSet.getString("cnstc_year"));
+                wifi.setX_SWIFI_INOUT_DOOR(resultSet.getString("inout_door"));
                 wifi.setX_SWIFI_REMARS3(resultSet.getString("remars3"));
                 wifi.setLAT(resultSet.getString("lat"));
                 wifi.setLNT(resultSet.getString("lnt"));
