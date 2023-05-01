@@ -7,12 +7,17 @@
     <title>와이파이 정보 구하기</title>
     <style>
       table {
-        width: 100%
+        width: 100%;
+
       }
       th, td {
         border: solid 1px #100;
         font-size: 12px;
       }
+      th {
+        background-color: aquamarine;
+      }
+
       form {
         padding-bottom: 10px;
         padding-top: 10px;
@@ -23,7 +28,7 @@
     <h1>와이파이 정보 구하기</h1>
 
     <a href="index.jsp">홈</a><a> | </a>
-    <a href="history-list.jsp">위치 히스토리 목록</a><a> | </a>
+    <a href="/HistoryListServlet">위치 히스토리 목록</a><a> | </a>
     <a href="/LoadAllWifiOnDBServlet">Open API 와이파이 정보 가져오기</a><a> | </a>
     <a href="bookmark-view.jsp">북마크 보기</a><a> | </a>
     <a href="bookmark-group-manage.jsp">북마크 그룹 관리</a>

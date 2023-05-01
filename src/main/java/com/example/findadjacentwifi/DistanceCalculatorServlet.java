@@ -18,6 +18,11 @@ public class DistanceCalculatorServlet extends HttpServlet {
         String latStr = request.getParameter("lat");
         String lntStr = request.getParameter("lnt");
 
+        History history = new History();
+
+        history.setLat(latStr);
+        history.setLnt(lntStr);
+
         double lat1 = Double.parseDouble(latStr);
         double lnt1 = Double.parseDouble(lntStr);
 
@@ -26,6 +31,7 @@ public class DistanceCalculatorServlet extends HttpServlet {
         DBHandler dbHandler = new DBHandler();
 
         dbHandler.createConnection();
+        dbHandler.insertHistory(history);
         ResultSet resultSet = dbHandler.selectNearestWifi(lat1, lnt1);
         List<Wifi> nearestWifi = new ArrayList<>();
 
@@ -33,6 +39,7 @@ public class DistanceCalculatorServlet extends HttpServlet {
         // update the database with the calculated distances
 
         try {
+
             while (resultSet.next()) {
                 double lat2 = resultSet.getDouble("lat");
                 double lnt2 = resultSet.getDouble("lnt");
@@ -58,6 +65,8 @@ public class DistanceCalculatorServlet extends HttpServlet {
                 wifi.setWORK_DTTM(resultSet.getString("work_dttm"));
 
                 nearestWifi.add(wifi);
+
+
             }
 
 

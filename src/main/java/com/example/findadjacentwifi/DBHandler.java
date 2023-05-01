@@ -112,24 +112,20 @@ public class DBHandler {
         }
     }
 
-//    public void insertHistory(History history) {
-//        String sql = "INSERT INTO wifi_unit (" +
-//                "distance, mgr_no, wrdofc, main_nm, adres1, adres2, instl_floor, instl_mby, instl_ty, svc_se," +
-//                "cmcwr, cnstc_year,inout_door, remars3, lat, lnt, work_dttm" +
-//                ") VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-//        PreparedStatement pstmt;
-//        try {
-//            pstmt = conn.prepareStatement(sql);
-//            pstmt.setDouble(1, 0.0);
-//            pstmt.setString(2, wifi.getX_SWIFI_MGR_NO());
-//            pstmt.setString(3, wifi.getX_SWIFI_WRDOFC());
-//            pstmt.setString(4, wifi.getX_SWIFI_MAIN_NM());
-//
-//            pstmt.executeUpdate();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public void insertHistory(History history) {
+        String sql = "INSERT INTO lookup_history (lat, lnt) VALUES (?, ?);";
+
+        PreparedStatement pstmt;
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, history.getLat());
+            pstmt.setString(2, history.getLnt());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public ResultSet selectAllWifi() {
 
@@ -140,6 +136,21 @@ public class DBHandler {
             stmt = conn.createStatement();
             resultSet = stmt.executeQuery("SELECT * FROM wifi_unit");
             System.out.println("Get all wifi");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return resultSet;
+    }
+
+    public ResultSet selectAllHistory() {
+
+        Statement stmt;
+        ResultSet resultSet = null;
+        try {
+
+            stmt = conn.createStatement();
+            resultSet = stmt.executeQuery("SELECT * FROM lookup_history");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -180,4 +191,16 @@ public class DBHandler {
     }
 
 
+    public void deleteHistory(String historyId) {
+        String sql = "DELETE FROM lookup_history WHERE id = ?";
+        PreparedStatement pstmt;
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, historyId);
+            pstmt.executeUpdate();
+            System.out.println("deleted");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
