@@ -29,15 +29,37 @@ public class DBHandler {
     }
 
     public void createTable() {
-        String sql = "create table if not exists wifi_unit" +
-                "(distance real, mgr_no text, wrdofc text, main_nm text, adres1 text, adres2 text, instl_floor text," +
-                "instl_mby text, instl_ty text, svc_se text, cmcwr text, cnstc_year text, inout_door text," +
-                "remars3 text, lat text, lnt text, work_dttm text, primary key (mgr_no) )";
+        String[] sqls = new String[]{"CREATE TABLE IF NOT EXISTS wifi_unit (\n" +
+                "  distance REAL,\n" +
+                "  mgr_no TEXT PRIMARY KEY,\n" +
+                "  wrdofc TEXT,\n" +
+                "  main_nm TEXT,\n" +
+                "  adres1 TEXT,\n" +
+                "  adres2 TEXT,\n" +
+                "  instl_floor TEXT,\n" +
+                "  instl_mby TEXT,\n" +
+                "  instl_ty TEXT,\n" +
+                "  svc_se TEXT,\n" +
+                "  cmcwr TEXT,\n" +
+                "  cnstc_year TEXT,\n" +
+                "  inout_door TEXT,\n" +
+                "  remars3 TEXT,\n" +
+                "  lat TEXT,\n" +
+                "  lnt TEXT,\n" +
+                "  work_dttm TEXT\n" +
+                ");\n", "CREATE TABLE IF NOT EXISTS lookup_history (\n" +
+                "  id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                "  lat TEXT,\n" +
+                "  lnt TEXT,\n" +
+                "  lookup_date DATETIME DEFAULT CURRENT_TIMESTAMP\n" +
+                ");"};
 
         Statement stmt = null;
         try {
             stmt = conn.createStatement();
-            stmt.execute(sql);
+            for (String sql : sqls) {
+                stmt.execute(sql);
+            }
             System.out.println("The table is created!");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -45,7 +67,8 @@ public class DBHandler {
     }
 
     public void dropTable() {
-        String sql = "drop table if exists wifi_unit";
+        String sql = "drop table if exists wifi_unit;" +
+                "drop table if exists lookup_history;";
 
         Statement stmt = null;
         try {
@@ -88,6 +111,25 @@ public class DBHandler {
             e.printStackTrace();
         }
     }
+
+//    public void insertHistory(History history) {
+//        String sql = "INSERT INTO wifi_unit (" +
+//                "distance, mgr_no, wrdofc, main_nm, adres1, adres2, instl_floor, instl_mby, instl_ty, svc_se," +
+//                "cmcwr, cnstc_year,inout_door, remars3, lat, lnt, work_dttm" +
+//                ") VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+//        PreparedStatement pstmt;
+//        try {
+//            pstmt = conn.prepareStatement(sql);
+//            pstmt.setDouble(1, 0.0);
+//            pstmt.setString(2, wifi.getX_SWIFI_MGR_NO());
+//            pstmt.setString(3, wifi.getX_SWIFI_WRDOFC());
+//            pstmt.setString(4, wifi.getX_SWIFI_MAIN_NM());
+//
+//            pstmt.executeUpdate();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public ResultSet selectAllWifi() {
 
