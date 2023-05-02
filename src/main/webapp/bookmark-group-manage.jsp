@@ -2,10 +2,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>와이파이 정보 구하기</title>
+  <title>북마크 그룹 관리</title>
 </head>
 <body>
-<h1>와이파이 정보 구하기</h1>
+<h1>북마크 그룹 관리</h1>
 <br/>
 
 </body>

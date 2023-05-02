@@ -1,5 +1,6 @@
-package com.example.findadjacentwifi;
+package com.example.findadjacentwifi.service;
 
+import com.example.findadjacentwifi.domain.Wifi;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;

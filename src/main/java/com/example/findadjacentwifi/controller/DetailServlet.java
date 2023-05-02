@@ -1,4 +1,7 @@
-package com.example.findadjacentwifi;
+package com.example.findadjacentwifi.controller;
+
+import com.example.findadjacentwifi.repository.DBHandler;
+import com.example.findadjacentwifi.domain.Wifi;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,8 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 @WebServlet("/DetailServlet")
 public class DetailServlet extends HttpServlet {

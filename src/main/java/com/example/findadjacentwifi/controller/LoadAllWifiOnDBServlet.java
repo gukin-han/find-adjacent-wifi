@@ -1,4 +1,8 @@
-package com.example.findadjacentwifi;
+package com.example.findadjacentwifi.controller;
+
+import com.example.findadjacentwifi.repository.DBHandler;
+import com.example.findadjacentwifi.domain.Wifi;
+import com.example.findadjacentwifi.service.WifiLoader;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -7,8 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
-import static com.example.findadjacentwifi.DBHandler.*;
 
 @WebServlet("/LoadAllWifiOnDBServlet")
 public class LoadAllWifiOnDBServlet extends HttpServlet {

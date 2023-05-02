@@ -1,4 +1,4 @@
-package com.example.findadjacentwifi;
+package com.example.findadjacentwifi.service;
 
 // simple version
 public class DistanceCalculator {

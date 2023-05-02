@@ -6,7 +6,7 @@
 
     <servlet>
         <servlet-name>Hello</servlet-name>
-        <servlet-class>com.example.findadjacentwifi.LoadAllWifiOnDBServlet</servlet-class>
+        <servlet-class>com.example.findadjacentwifi.controller.LoadAllWifiOnDBServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

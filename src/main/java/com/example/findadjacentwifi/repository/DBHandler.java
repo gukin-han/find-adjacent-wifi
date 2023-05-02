@@ -1,8 +1,9 @@
-package com.example.findadjacentwifi;
+package com.example.findadjacentwifi.repository;
+
+import com.example.findadjacentwifi.domain.History;
+import com.example.findadjacentwifi.domain.Wifi;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DBHandler {
     private Connection conn;
@@ -52,7 +53,11 @@ public class DBHandler {
                 "  lat TEXT,\n" +
                 "  lnt TEXT,\n" +
                 "  lookup_date DATETIME DEFAULT CURRENT_TIMESTAMP\n" +
-                ");"};
+                ");","CREATE TABLE IF NOT EXISTS bookmark_group (\n" +
+                "                 id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                "                 name TEXT,\n" +
+                "                 sort_order INTEGER,\n" +
+                "                 created_date DATETIME DEFAULT CURRENT_TIMESTAMP)"};
 
         Statement stmt = null;
         try {
@@ -67,13 +72,16 @@ public class DBHandler {
     }
 
     public void dropTable() {
-        String sql = "drop table if exists wifi_unit;" +
-                "drop table if exists lookup_history;";
+        String[] sqls = {"drop table if exists wifi_unit;"
+                ,"drop table if exists lookup_history;"
+                ,"drop table if exists bookmark_group;"};
 
         Statement stmt = null;
         try {
             stmt = conn.createStatement();
-            stmt.execute(sql);
+            for (String sql : sqls) {
+                stmt.execute(sql);
+            }
             System.out.println("The table is removed!");
         } catch (SQLException e) {
             e.printStackTrace();

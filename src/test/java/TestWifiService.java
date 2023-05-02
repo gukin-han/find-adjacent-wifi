@@ -1,7 +1,3 @@
-import com.example.findadjacentwifi.*;
-
-import static com.example.findadjacentwifi.DBHandler.*;
-
 public class TestWifiService {
     public static void main(String[] args) {
 //        WifiLoader service = new WifiLoader();

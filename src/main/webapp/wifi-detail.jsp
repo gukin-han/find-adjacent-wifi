@@ -1,7 +1,7 @@
 <%
   Wifi wifi = (Wifi) request.getAttribute("wifi");
 %>
-<%@ page import="com.example.findadjacentwifi.Wifi" %>
+<%@ page import="com.example.findadjacentwifi.domain.Wifi" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>

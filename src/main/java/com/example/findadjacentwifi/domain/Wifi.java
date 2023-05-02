@@ -1,4 +1,4 @@
-package com.example.findadjacentwifi;
+package com.example.findadjacentwifi.domain;
 
 public class Wifi {
     private double distance;

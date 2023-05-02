@@ -1,4 +1,6 @@
-package com.example.findadjacentwifi;
+package com.example.findadjacentwifi.controller;
+
+import com.example.findadjacentwifi.repository.DBHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

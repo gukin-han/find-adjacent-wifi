@@ -1,4 +1,9 @@
-package com.example.findadjacentwifi;
+package com.example.findadjacentwifi.controller;
+
+import com.example.findadjacentwifi.repository.DBHandler;
+import com.example.findadjacentwifi.service.DistanceCalculator;
+import com.example.findadjacentwifi.domain.History;
+import com.example.findadjacentwifi.domain.Wifi;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
