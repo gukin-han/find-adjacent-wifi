@@ -158,6 +158,23 @@ public class DBHandler {
         return resultSet;
     }
 
+    public ResultSet selectOneWifi(String mgrNo) {
+
+        String sql = "SELECT * FROM wifi_unit where mgr_no=?";
+
+        PreparedStatement pstmt;
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, mgrNo);
+
+            return pstmt.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
     public void updateDistance(double distance, String mgr_no) {
         String sql = "update wifi_unit set distance = ? where mgr_no = ?";
         PreparedStatement pstmt;
@@ -203,4 +220,7 @@ public class DBHandler {
             e.printStackTrace();
         }
     }
+
+
+
 }

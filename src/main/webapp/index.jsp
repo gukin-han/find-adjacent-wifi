@@ -78,7 +78,7 @@
               .append("<td>" + String.format("%.5f",wifi.getDistance()) + "</td>")
               .append("<td>" + wifi.getX_SWIFI_MGR_NO() + "</td>")
               .append("<td>" + wifi.getX_SWIFI_WRDOFC() + "</td>")
-              .append("<td>" + wifi.getX_SWIFI_MAIN_NM() + "</td>")
+              .append("<td><a href='/DetailServlet?mgr_no=" + wifi.getX_SWIFI_MGR_NO() + "'>" + wifi.getX_SWIFI_MAIN_NM() + "</a></td>")
               .append("<td>" + wifi.getX_SWIFI_ADRES1() + "</td>")
               .append("<td>" + wifi.getX_SWIFI_ADRES2() + "</td>")
               .append("<td>" + wifi.getX_SWIFI_INSTL_FLOOR() + "</td>")
