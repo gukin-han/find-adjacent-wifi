@@ -42,7 +42,7 @@
 
 <form action="bookmark-group.jsp" method="GET">
   <select name="group">
-    <option value="all">모든 북마크 그룹</option>
+    <option value="all">북마크 그룹 이름 선택</option>
     <%
       List<BookmarkGroup> bookmarkGroups = (List<BookmarkGroup>) request.getAttribute("bookmarkGroups");
       for (BookmarkGroup group : bookmarkGroups) {
@@ -50,7 +50,7 @@
     <option value="<%= group.getId() %>"><%= group.getName() %></option>
     <% } %>
   </select>
-  <button type="submit">보기</button>
+  <button type="submit">북마크 추가하기</button>
 </form>
 
 <table>

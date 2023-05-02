@@ -58,7 +58,14 @@ public class DBHandler {
                 "                 name TEXT,\n" +
                 "                 sort_order INTEGER,\n" +
                 "                 created_date DATETIME DEFAULT CURRENT_TIMESTAMP," +
-                "                 edited_date TEXT)"};
+                "                 edited_date TEXT);","CREATE TABLE bookmark (\n" +
+                "    id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                "    bookmark_group_id INTEGER,\n" +
+                "    wifi_id text,\n" +
+                "    created_date DATETIME DEFAULT CURRENT_TIMESTAMP," +
+                "    FOREIGN KEY (bookmark_group_id) REFERENCES bookmark_group(id),\n" +
+                "    FOREIGN KEY (wifi_id) REFERENCES wifi(mgr_no)\n" +
+                ");"};
 
         Statement stmt = null;
         try {
@@ -75,7 +82,8 @@ public class DBHandler {
     public void dropTable() {
         String[] sqls = {"drop table if exists wifi_unit;"
                 ,"drop table if exists lookup_history;"
-                ,"drop table if exists bookmark_group;"};
+                ,"drop table if exists bookmark_group;"
+                ,"drop table if exists bookmark;"};
 
         Statement stmt = null;
         try {
