@@ -1,7 +1,10 @@
 package com.example.findadjacentwifi.controller;
 
+import com.example.findadjacentwifi.domain.Bookmark;
 import com.example.findadjacentwifi.domain.BookmarkGroup;
+import com.example.findadjacentwifi.domain.BookmarkJoined;
 import com.example.findadjacentwifi.repository.JdbcBookmarkGroupRepository;
+import com.example.findadjacentwifi.repository.JdbcBookmarkRepository;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,25 +16,25 @@ import java.io.IOException;
 import java.util.List;
 
 
-@WebServlet("/BookmarkGroupServlet")
-public class BookmarkGroupServlet extends HttpServlet {
+@WebServlet("/BookmarkViewServlet")
+public class BookmarkViewServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Execute the necessary Java code here
-        JdbcBookmarkGroupRepository jdbcBookmarkGroupRepository = new JdbcBookmarkGroupRepository();
+        JdbcBookmarkRepository jdbcBookmarkRepository = new JdbcBookmarkRepository();
 
-        jdbcBookmarkGroupRepository.createConnection();
-        List<BookmarkGroup> bookmarkGroupList = jdbcBookmarkGroupRepository.selectAll();
-        jdbcBookmarkGroupRepository.closeConnection();
+        jdbcBookmarkRepository.createConnection();
+        List<BookmarkJoined> bookmarkList = jdbcBookmarkRepository.selectJoinedAll();
+        jdbcBookmarkRepository.closeConnection();
 
 
 
 
         // Set wifiListSize as an attribute in the request object
-        request.setAttribute("bookmarkGroupList", bookmarkGroupList);
+        request.setAttribute("bookmarkList", bookmarkList);
 
         // Forward the request to the appropriate JSP page
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/bookmark-group.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/bookmark-view.jsp");
         dispatcher.forward(request, response);
     }
 }
