@@ -57,7 +57,8 @@ public class DBHandler {
                 "                 id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "                 name TEXT,\n" +
                 "                 sort_order INTEGER,\n" +
-                "                 created_date DATETIME DEFAULT CURRENT_TIMESTAMP)"};
+                "                 created_date DATETIME DEFAULT CURRENT_TIMESTAMP," +
+                "                 edited_date TEXT)"};
 
         Statement stmt = null;
         try {

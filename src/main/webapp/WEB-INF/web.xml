@@ -4,14 +4,5 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-    <servlet>
-        <servlet-name>Hello</servlet-name>
-        <servlet-class>com.example.findadjacentwifi.controller.LoadAllWifiOnDBServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>Hello</servlet-name>
-        <url-pattern>*.doGet</url-pattern>
-    </servlet-mapping>
 
 </web-app>

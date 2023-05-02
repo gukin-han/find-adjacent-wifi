@@ -1,16 +1,25 @@
 package com.example.findadjacentwifi.domain;
 
-public class Bookmark_group {
-    private String id;
+public class BookmarkGroup {
+    private long id; // use long instead of String for id
     private String name;
-    private String sortOrder;
+    private int sortOrder; // use int instead of String for sortOrder
     private String createdDate;
+    private String editedDate;
 
-    public String getId() {
+    public String getEditedDate() {
+        return editedDate;
+    }
+
+    public void setEditedDate(String editedDate) {
+        this.editedDate = editedDate;
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -22,11 +31,11 @@ public class Bookmark_group {
         this.name = name;
     }
 
-    public String getSortOrder() {
+    public int getSortOrder() {
         return sortOrder;
     }
 
-    public void setSortOrder(String sortOrder) {
+    public void setSortOrder(int sortOrder) {
         this.sortOrder = sortOrder;
     }
 

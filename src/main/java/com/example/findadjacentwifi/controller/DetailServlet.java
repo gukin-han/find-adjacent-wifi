@@ -1,7 +1,9 @@
 package com.example.findadjacentwifi.controller;
 
+import com.example.findadjacentwifi.domain.BookmarkGroup;
 import com.example.findadjacentwifi.repository.DBHandler;
 import com.example.findadjacentwifi.domain.Wifi;
+import com.example.findadjacentwifi.repository.JdbcBookmarkGroupRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet("/DetailServlet")
 public class DetailServlet extends HttpServlet {
@@ -21,11 +25,15 @@ public class DetailServlet extends HttpServlet {
 
         // do something with the ID, e.g. retrieve the corresponding wifi information from a database
         DBHandler dbHandler = new DBHandler();
+        JdbcBookmarkGroupRepository jdbcBookmarkGroupRepository = new JdbcBookmarkGroupRepository();
+        jdbcBookmarkGroupRepository.createConnection();
         dbHandler.createConnection();
         Wifi wifi = new Wifi();
+        List<BookmarkGroup> bookmarkGroupList;
 
         try {
             ResultSet resultSet = dbHandler.selectOneWifi(mgr_no);
+            bookmarkGroupList = jdbcBookmarkGroupRepository.selectAll();
 
             wifi.setX_SWIFI_MGR_NO(resultSet.getString("mgr_no"));
             wifi.setX_SWIFI_WRDOFC(resultSet.getString("wrdofc"));
@@ -45,12 +53,14 @@ public class DetailServlet extends HttpServlet {
             wifi.setWORK_DTTM(resultSet.getString("work_dttm"));
 
             request.setAttribute("wifi", wifi);
+            request.setAttribute("bookmarkGroups", bookmarkGroupList);
 
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         dbHandler.closeConnection();
+        jdbcBookmarkGroupRepository.closeConnection();
 
         // forward the request to the detail view JSP page
         request.getRequestDispatcher("/wifi-detail.jsp").forward(request, response);
